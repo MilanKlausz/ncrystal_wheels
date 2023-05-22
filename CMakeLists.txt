@@ -237,9 +237,9 @@ file_globsrc( HDRS_INTERNAL_NC "ncrystal_core/include/NCrystal/internal/*.*")
 file_globsrc( SRCS_NC "ncrystal_core/src/*.cc")
 file_globsrc( EXAMPLES_NC "examples/ncrystal_example_c*.c*")
 file_globsrc( DATAFILES "data/*.ncmat")
-file_globsrc( SRCS_NCPY "ncrystal_python/*.py")
-file_globsrc( SRCS_PYSCRIPTS "ncrystal_python/ncrystal_*")
-file_globsrc( tmp "ncrystal_python/nctool" )
+file_globsrc( SRCS_NCPY "NCrystal/*.py")
+file_globsrc( SRCS_PYSCRIPTS "NCrystal/ncrystal_*")
+file_globsrc( tmp "NCrystal/nctool" )
 list(APPEND SRCS_PYSCRIPTS ${tmp})
 file_globsrc( HDRS_NCG4 "ncrystal_geant4/include/G4NCrystal/*.*")
 file_globsrc( SRCS_NCG4 "ncrystal_geant4/src/*.cc")
@@ -520,7 +520,7 @@ if ( NCRYSTAL_ENABLE_DATA STREQUAL "EMBED" )
     message(FATAL_ERROR "Python3.6+ interpreter not found (required when NCRYSTAL_ENABLE_DATA=EMBED).")
   endif()
   #Generate C++ code from the .ncmat files:
-  execute_process(COMMAND "${Python3_EXECUTABLE}" "${PROJECT_SOURCE_DIR}/ncrystal_python/ncrystal_ncmat2cpp"
+  execute_process(COMMAND "${Python3_EXECUTABLE}" "${PROJECT_SOURCE_DIR}/NCrystal/ncrystal_ncmat2cpp"
     "-n" "NCrystal::AutoGenNCMAT::registerStdNCMAT"
     "--regfctname" "NCrystal::internal::registerEmbeddedNCMAT(const char*,const char*)"
     "-o" "${PROJECT_BINARY_DIR}/autogen_ncmat_data.cc" ${DATAFILES} RESULT_VARIABLE status )
