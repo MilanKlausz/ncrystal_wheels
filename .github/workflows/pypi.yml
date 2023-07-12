@@ -4,7 +4,7 @@ run-name: Publish to ${{inputs.TEST && 'Test' || ''}}PyPI
 on:
   push:
     tags:
-      - 'v[0-9].*' #pattern match
+      - 'v[0-9].*' #pattern match TEST
   workflow_dispatch:
     inputs:
       TEST:
