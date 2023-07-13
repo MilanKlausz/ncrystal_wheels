@@ -4,28 +4,28 @@ run-name: Publish to ${{inputs.TEST && 'Test' || ''}}PyPI
 on:
   push:
     tags:
-      - 'v[0-9].*' #pattern match TEST
+      - 'v[0-9].*' #pattern match
   workflow_dispatch:
     inputs:
+      REF:
+        type: string
+        description: The repo ref (tag/branch) to use (defaults to the branch to use the workflow from)
       TEST:
         type: boolean
         description: Upload to TestPyPI (instead of the PyPI)
         default: true
       BUILD_ONLY:
         type: boolean
-        description: Run building distributions without attempting to upload them
+        description: Build distributions without deploying
         default: false
-      SKIP_EXISTING:
-        type: boolean
-        description: Allow skipping upload if the same version of a specific distribution is already uploaded
-        default: true
+
 
 jobs:
   use-pypi_deploy-workflow:
     uses: MilanKlausz/ncrystal_actions/.github/workflows/pypi_deploy.yml@main
     with:
       REPOSITORY: ${{ github.repository }}
-      BRANCH: ${{ github.ref_name }}
+      REF: ${{ inputs.REF || github.ref_name }}
       DO_DEPLOY: ${{ !inputs.BUILD_ONLY }}
       ENVIRONMENT: ${{ inputs.TEST && 'testpypi' || 'pypi' }}
       SKIP_EXISTING: ${{ inputs.SKIP_EXISTING || true }}
